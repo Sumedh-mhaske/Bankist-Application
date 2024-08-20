@@ -178,3 +178,9 @@ const displayMovements = function (acc, sort = false) {
     containerMovements.insertAdjacentHTML("afterbegin", html);
   });
 };
+
+// Display total ammount
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => (acc = acc + mov), 0);
+  labelBalance.textContent = formatCur(acc.balance, acc.locale, acc.currency);
+};

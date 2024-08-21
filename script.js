@@ -216,3 +216,14 @@ const createUsernames = function (accs) {
   });
 };
 createUsernames(accounts);
+
+const updateUI = function (acc) {
+  // Display movments
+  displayMovements(acc);
+
+  // Display balance
+  calcDisplayBalance(acc);
+
+  // Display summary
+  calcDisplaySummary(acc);
+};

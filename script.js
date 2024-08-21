@@ -260,3 +260,54 @@ const StartLogOutTimer = function () {
 
   return timer;
 };
+
+// Login section
+
+let currentAccount, timer;
+
+btnLogin.addEventListener("click", function (e) {
+  // Prevent form from submitting
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    (acc) => acc.username === inputLoginUsername.value
+  );
+
+  if (currentAccount?.pin === +inputLoginPin.value) {
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(" ")[0]
+    }`;
+    containerApp.style.opacity = 100;
+
+    // Create current date and time
+    // Locale
+    const now = new Date();
+    const options = {
+      hour: "numeric",
+      minute: "numeric",
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+      // weekday: "long",
+    };
+
+    // const locale = navigator.language;
+
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
+
+    // Clear input fields
+    inputLoginPin.value = inputLoginUsername.value = "";
+    inputLoginPin.blur();
+    inputLoginUsername.blur();
+
+    // Timer
+    if (timer) clearInterval(timer);
+    timer = StartLogOutTimer();
+
+    updateUI(currentAccount);
+  }
+});

@@ -311,3 +311,39 @@ btnLogin.addEventListener("click", function (e) {
     updateUI(currentAccount);
   }
 });
+
+// Transfer section
+btnTransfer.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const amount = +inputTransferAmount.value;
+  const receiverAcc = accounts.find(
+    (acc) => acc.username === inputTransferTo.value
+  );
+
+  inputTransferAmount.value = inputTransferTo.value = "";
+  inputTransferAmount.blur();
+  inputTransferTo.blur();
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc.username !== currentAccount.username
+  ) {
+    // Doing the transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    // Add transfer date
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAcc.movementsDates.push(new Date().toISOString());
+
+    // Update UI
+    updateUI(currentAccount);
+
+    // Reset timer
+    clearInterval(timer);
+    timer = StartLogOutTimer();
+  }
+});

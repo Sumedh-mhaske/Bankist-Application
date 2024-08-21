@@ -227,3 +227,36 @@ const updateUI = function (acc) {
   // Display summary
   calcDisplaySummary(acc);
 };
+
+// Event Handlers
+
+// Timer
+
+const StartLogOutTimer = function () {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+
+    // In each call, print remaining time to the UI
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // When 0 sec, stop timer and log out user
+    if (time === 0) {
+      clearInterval(timer);
+
+      labelWelcome.textContent = "Log in to get started";
+      containerApp.style.opacity = 0;
+    }
+
+    // Decrese 1s
+    time--;
+  };
+  // Set timer to 5 min
+  let time = 120;
+
+  // Call the timer every sec
+  tick();
+  const timer = setInterval(tick, 1000);
+
+  return timer;
+};

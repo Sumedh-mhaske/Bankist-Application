@@ -376,3 +376,27 @@ btnLoan.addEventListener("click", function (e) {
     timer = StartLogOutTimer();
   }
 });
+
+// Close account section
+btnClose.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    +inputClosePin.value === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      (acc) => acc.username === currentAccount.username
+    );
+
+    // Delete account
+    accounts.splice(index, 1);
+
+    // Hide UI
+    containerApp.style.opacity = 0;
+  }
+
+  inputCloseUsername = inputClosePin = "";
+  inputClosePin.blur();
+  inputCloseUsername.blur();
+});

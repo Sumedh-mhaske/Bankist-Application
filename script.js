@@ -400,3 +400,13 @@ btnClose.addEventListener("click", function (e) {
   inputClosePin.blur();
   inputCloseUsername.blur();
 });
+
+// sort button
+
+let sorted = false;
+btnSort.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  displayMovements(currentAccount, !sorted);
+  sorted = !sorted;
+});

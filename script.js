@@ -116,16 +116,16 @@ const inputClosePin = document.querySelector(".form__input--pin");
 // Main part
 
 // Internationlization
-const now = new Date();
-const options = {
-  hour: "numeric",
-  minute: "numeric",
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-  weekday: "long",
-};
-labelDate.textContent = new Intl.DateTimeFormat("en-US").format(now);
+// const now = new Date();
+// const options = {
+//   hour: "numeric",
+//   minute: "numeric",
+//   day: "numeric",
+//   month: "long",
+//   year: "numeric",
+//   weekday: "long",
+// };
+// labelDate.textContent = new Intl.DateTimeFormat("en-US").format(now);
 
 // Date formatting
 const formatMovementDate = function (date, locale) {
@@ -133,7 +133,6 @@ const formatMovementDate = function (date, locale) {
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
   const daysPassed = calcDaysPassed(new Date(), date);
-  console.log(daysPassed);
 
   if (daysPassed === 0) return "Today";
   if (daysPassed === 1) return "Yesterday";
@@ -181,7 +180,7 @@ const displayMovements = function (acc, sort = false) {
 
 // Display total ammount
 const calcDisplayBalance = function (acc) {
-  acc.balance = acc.movements.reduce((acc, mov) => (acc = acc + mov), 0);
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = formatCur(acc.balance, acc.locale, acc.currency);
 };
 
@@ -300,9 +299,8 @@ btnLogin.addEventListener("click", function (e) {
     ).format(now);
 
     // Clear input fields
-    inputLoginPin.value = inputLoginUsername.value = "";
+    inputLoginUsername.value = inputLoginPin.value = "";
     inputLoginPin.blur();
-    inputLoginUsername.blur();
 
     // Timer
     if (timer) clearInterval(timer);
@@ -322,14 +320,12 @@ btnTransfer.addEventListener("click", function (e) {
   );
 
   inputTransferAmount.value = inputTransferTo.value = "";
-  inputTransferAmount.blur();
-  inputTransferTo.blur();
 
   if (
     amount > 0 &&
     receiverAcc &&
     currentAccount.balance >= amount &&
-    receiverAcc.username !== currentAccount.username
+    receiverAcc?.username !== currentAccount.username
   ) {
     // Doing the transfer
     currentAccount.movements.push(-amount);
@@ -366,14 +362,13 @@ btnLoan.addEventListener("click", function (e) {
 
       // Update UI
       updateUI(currentAccount);
+
+      // Reset timer
+      clearInterval(timer);
+      timer = StartLogOutTimer();
     }, 2500);
 
     inputLoanAmount.value = "";
-    inputLoanAmount.blur();
-
-    // Reset timer
-    clearInterval(timer);
-    timer = StartLogOutTimer();
   }
 });
 
@@ -397,8 +392,6 @@ btnClose.addEventListener("click", function (e) {
   }
 
   inputCloseUsername = inputClosePin = "";
-  inputClosePin.blur();
-  inputCloseUsername.blur();
 });
 
 // sort button

@@ -1,7 +1,6 @@
 <h1>Bankist App</h1>
 <h2>Project Link</h2>
-
-[Bankist App](bankist-application-git-main-sumedh-mhaskes-projects.vercel.app)
+bankist-application-git-main-sumedh-mhaskes-projects.vercel.app
 
 <h2>Overview</h2>
 <p>
